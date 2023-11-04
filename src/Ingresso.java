@@ -1,11 +1,11 @@
 public class Ingresso {
     private EnumTipoIngresso tipo;
     private EnumCategoriaIngresso categoria;
-    private Filme filme;
+    private Sessao sessao;
 
-    public Ingresso(EnumTipoIngresso tipo, EnumCategoriaIngresso categoria, Filme filme) {
+    public Ingresso(EnumTipoIngresso tipo, EnumCategoriaIngresso categoria, Sessao sessao) {
         this.tipo = tipo;
         this.categoria = categoria;
-        this.filme = filme;
+        this.sessao = sessao;
     }
 }
