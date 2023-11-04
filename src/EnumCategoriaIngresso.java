@@ -1,4 +1,4 @@
 public enum EnumCategoriaIngresso {
-    MEIO_INGRESSO,
-    INGRESSO_SORTEIO
+    INGRESSO_FISICO,
+    INGRESSO_ONLINE
 }
