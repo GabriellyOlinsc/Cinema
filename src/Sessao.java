@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+
 public class Sessao {
     private boolean estadoDaSessao;
     private int horario;
     private Ingresso ingresso;
     private final Filme filme;
     private ArrayList<Sala> salas = new ArrayList<Sala>(); //PODE FAZER ISSO?
+
     public Sessao(Sala sala, boolean estadoDaSessao, int horario, Filme filme, Ingresso ingresso){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
@@ -14,11 +16,13 @@ public class Sessao {
         ingresso.addSessao(this);
         salas.add(sala);
     }
+
     public void setIngresso(Ingresso ing){
         if(this.ingresso == null) {
             this.ingresso = ing;
         }
     }
+
     public boolean getEstadoDaSessao() {
         return estadoDaSessao;
     }
