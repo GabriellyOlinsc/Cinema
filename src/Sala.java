@@ -7,4 +7,13 @@ public class Sala {
         this.nAssentos = assentos;
         this.tipoTela = tipoTela;
     }
+
+    @Override
+    public String toString() {
+        return String.format("\nSala{" +
+                "\nnAssentos=" + nAssentos +
+                ",\n tipoTela='" + tipoTela + '\'' +
+                ",\n localizacao='" + localizacao + '\'' +
+                '}');
+    }
 }
