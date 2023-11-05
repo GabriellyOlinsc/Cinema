@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
-
 public class Sessao {
     private boolean estadoDaSessao;
     private int horario;
