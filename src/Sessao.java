@@ -42,9 +42,11 @@ public class Sessao {
     public Filme getFilme() {
         return filme;
     }
+
     public String getTituloFilme(){
         return this.filme.getTitulo();
     }
+
     @Override
     public String toString() {
         return String.format("\n\nSessao{" +
