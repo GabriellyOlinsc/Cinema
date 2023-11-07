@@ -1,7 +1,17 @@
 public enum EnumGeneroFilme {
-    ACAO,
-    AVENTURA,
-    SUSPENSE,
-    COMEDIA,
-    DRAMA
+    ACAO("Ação"),
+    AVENTURA("Aventura"),
+    SUSPENSE("Suspense"),
+    COMEDIA("Comedia"),
+    DRAMA("Drama");
+
+    private final String descricao;
+
+    EnumGeneroFilme(String descricao){
+        this.descricao = descricao;
+    }
+
+    public String getDescricao(){
+        return this.descricao;
+    }
 }

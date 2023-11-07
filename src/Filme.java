@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Filme {
     private String titulo;
     private int duracao;
+    private int qtdSessao; // indica a quantidade de sessões que o filme ocupa
     private EnumGeneroFilme genero;
     private ArrayList<Sessao> sessoes;
 
@@ -10,7 +11,7 @@ public class Filme {
         setTitulo(titulo);
         setDuracao(duracao);
         setGenero(genero);
-        sessoes = new ArrayList<Sessao>();
+        sessoes = new ArrayList<>();
     }
 
     public String getTitulo() {
@@ -22,7 +23,7 @@ public class Filme {
     }
 
     public int getDuracao() {
-        return duracao;
+        return this.duracao;
     }
 
     public void setDuracao(int duracao) {
@@ -34,21 +35,49 @@ public class Filme {
     }
 
     public EnumGeneroFilme getGenero() {
-        return genero;
+        return this.genero;
     }
     public void setGenero(EnumGeneroFilme genero) {
         this.genero = genero;
     }
 
+    public int getQtdSessao() {
+        return qtdSessao;
+    }
+
+    public void setQtdSessao(int qtdSessao) {
+        this.qtdSessao = qtdSessao;
+    }
+
+    public ArrayList<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(ArrayList<Sessao> sessoes) {
+        this.sessoes = sessoes;
+    }
+
     public void addSessoes(Sessao novaSessao) {
         sessoes.add(novaSessao);
+        this.qtdSessao++;
     }
+
+    public void delSessoes(Sessao sessao){
+        for(Sessao s : sessoes){
+            if (s.equals(sessao)){
+                this.sessoes.remove(s);
+                s.getFilme().delSessoes(sessao);
+                this.qtdSessao--;
+            }
+        }
+    }
+
     @Override
     public String toString() {
-        return String.format("\nFilme{" +
-                "\ntitulo='" + titulo +
-                ",\n duracao=" + duracao +
-                ", \ngenero=" + genero +
+        return String.format("\nFilme {" +
+                "\nTitulo = " + this.titulo +
+                ",\nDuracao = " + this.duracao +
+                ", \nGenero = " + this.genero +
                 '}');
     }
 }

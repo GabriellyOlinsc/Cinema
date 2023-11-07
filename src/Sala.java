@@ -8,6 +8,30 @@ public class Sala {
         this.tipoTela = tipoTela;
     }
 
+    public int getnAssentos() {
+        return nAssentos;
+    }
+
+    public void setnAssentos(int nAssentos) {
+        this.nAssentos = nAssentos;
+    }
+
+    public String getTipoTela() {
+        return tipoTela;
+    }
+
+    public void setTipoTela(String tipoTela) {
+        this.tipoTela = tipoTela;
+    }
+
+    public String getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
+    }
+
     @Override
     public String toString() {
         return String.format("\nSala{" +

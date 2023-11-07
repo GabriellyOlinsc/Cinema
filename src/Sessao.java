@@ -2,12 +2,11 @@ import java.util.ArrayList;
 
 public class Sessao {
     private boolean estadoDaSessao;
-    private int horario;
+    private String horario;
     private Ingresso ingresso;
     private final Filme filme;
-    private ArrayList<Sala> salas = new ArrayList<Sala>(); //PODE FAZER ISSO?
-
-    public Sessao(Sala sala, boolean estadoDaSessao, int horario, Filme filme, Ingresso ingresso){
+    private final ArrayList<Sala> salas = new ArrayList<>(); //PODE FAZER ISSO? R: Pode sim
+    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme, Ingresso ingresso){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
@@ -23,8 +22,21 @@ public class Sessao {
         }
     }
 
+    public void cadeirasDisponiveis(){
+        for (Sala s : salas){
+            System.out.println("Na sala localizada " + s.getLocalizacao() + " tem " + s.getnAssentos() + " assentos disponiveis.");
+        }
+    }
+    public String getHorario() {
+        return this.horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
     public boolean getEstadoDaSessao() {
-        return estadoDaSessao;
+        return this.estadoDaSessao;
     }
 
     public void setEstadoDaSessao(boolean estado) {
@@ -32,7 +44,7 @@ public class Sessao {
     }
 
     public ArrayList<Sala> getSalas() {
-        return salas;
+        return this.salas;
     }
 
     public void addSala(Sala sala) {
@@ -49,12 +61,12 @@ public class Sessao {
 
     @Override
     public String toString() {
-        return String.format("\n\nSessao{" +
-                "\n estadoDaSessao=" + estadoDaSessao +
-                ", \n horario=" + horario + "  " +
+        return String.format("\n\nSessao {" +
+                "\n EstadoDaSessao = " + estadoDaSessao +
+                ", \nHorario = " + horario + "  " +
                 this.ingresso.toString()+ "  " +
                 this.filme.toString() +
-                ", \n salas=" + salas.toString() +
+                ", \nSalas = " + salas.toString() +
                 '}');
     }
 }
