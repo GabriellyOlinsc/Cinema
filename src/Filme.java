@@ -11,6 +11,7 @@ public class Filme {
         setTitulo(titulo);
         setDuracao(duracao);
         setGenero(genero);
+        this.qtdSessao = 0;
         sessoes = new ArrayList<>();
     }
 

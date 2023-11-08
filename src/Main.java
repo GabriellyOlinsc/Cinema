@@ -1,5 +1,7 @@
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -36,6 +38,7 @@ public class Main {
         sessoes.add(new Sessao(sala2, true, "16:00", filme2, ingresso2));
         sessoes.add(new Sessao(sala3, true, "15:30", filme3, ingresso3));
         sessoes.add(new Sessao(sala4, false, "20:00", filme4, ingresso4));
+        sessoes.add(new Sessao(sala1, false, "22:00", filme4));
 
         int opcao = 0;
 
@@ -45,27 +48,98 @@ public class Main {
         System.out.println();
 
         while (opcao != 4){
-            System.out.println("1 - Visualizar as sessoes do dia\n2 - Compra de Ingressos\n3 - Consulta de sessoes\n4 - Sair do programa");
+            System.out.println("1 - Visualizar as sessoes do dia\n2 - Compra de Ingressos\n3 - Consulta de sessoes\n4 - Sair do programa\nSelecione uma opcao: ");
             opcao = input.nextInt();
 
-            switch(opcao){
+            switch(opcao) {
                 case 1:
-                        for (Sessao s : sessoes){
-                            if(s.getEstadoDaSessao()) {
-                                System.out.println("========= EM ANDAMENTO =========");
-                                System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
-                                System.out.println("================================");
-                                System.out.println();
-                            }else{
-                                System.out.println("============ FECHADO ============");
-                                System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
-                                System.out.println("=================================");
-                                System.out.println();
-                            }
+                    for (Sessao s : sessoes) {
+                        if (s.getEstadoDaSessao()) {
+                            System.out.println("========= EM ANDAMENTO =========");
+                            System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
+                            System.out.println("================================");
+                            System.out.println();
+                        } else {
+                            System.out.println("============ EM BREVE ============");
+                            System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
+                            System.out.println("=================================");
+                            System.out.println();
                         }
+                    }
                     break;
                 case 2:
+                    System.out.print("========= VENDA DE INGRESSOS =========\nSelecione o filme: ");
+                    input.nextLine();     //para limpar o buffer
+                    String filmeDesejado = input.nextLine();
 
+                    System.out.print("Numero de Ingressos: ");
+                    int numIngresso = input.nextInt();
+
+                    //VERFICANDO FILME E NUMERO DE ASSENTOS + SALAS DISPONIVEIS
+                    boolean estaNoCatalogo = false;
+                    List<String> horariosDisponiveis = new ArrayList<String>();
+                    for (Sessao s : sessoes) {
+                        if (s.getTituloFilme().equalsIgnoreCase(filmeDesejado) && !s.getEstadoDaSessao()) {
+                            System.out.printf("Horarios: %s    ", s.getHorario());
+                            for (Sala sala : s.getSalas()) {
+                                if (sala.getnAssentos() > numIngresso) {
+                                    System.out.printf(" Sala: %s     Assentos disponiveis: %d%n", sala.getLocalizacao(), sala.getnAssentos());
+                                } else
+                                    System.out.printf("Assentos insuficientes. Capacidade atual: %s", sala.getnAssentos());
+                            }
+                            horariosDisponiveis.add(s.getHorario());
+                            estaNoCatalogo = true;
+                        }
+                    }
+
+                    if (!estaNoCatalogo) {
+                        System.out.println("Filme não encontrado no catálogo.");
+                    } else {
+                        //VERIFICAÇÃO DE HORARIOS
+                        int index = 0;
+                        estaNoCatalogo = false;
+                        System.out.print("\nSelecione um horario: ");
+                        input.nextLine();
+                        String horario = input.nextLine();
+                        for (String h : horariosDisponiveis)
+                            if (Objects.equals(horario, h)) {
+                                index = horariosDisponiveis.indexOf(h);
+                                estaNoCatalogo = true;
+                                break;
+                            }
+                        if (!estaNoCatalogo) {
+                            System.out.println("Horario não disponível.");
+                            break;
+                        }
+
+                        //VERIFICACAO TIPO DO INGRESSO
+                        int opcaoTipoIngresso;
+                        do {
+                            System.out.println("Escolha o tipo de ingresso: \n1 - Meio Ingresso \n2 - Ingresso Sorteio");
+                            opcaoTipoIngresso = input.nextInt();
+                        } while (opcaoTipoIngresso < 1 || opcaoTipoIngresso > 2);
+
+                        EnumTipoIngresso tipoIngressoSelecionado = opcaoTipoIngresso == 1 ? EnumTipoIngresso.MEIO_INGRESSO : EnumTipoIngresso.INGRESSO_SORTEIO;
+
+                        int opcaoCategoriaIngresso;
+                        do {
+                            System.out.println("Escolha a categoria de ingresso:\n1 - Ingresso Físico\n2 - Ingresso Online");
+                            opcaoCategoriaIngresso = input.nextInt();
+                        } while (opcaoCategoriaIngresso < 1 || opcaoCategoriaIngresso > 2);
+
+                        EnumCategoriaIngresso categoriaIngressoSelecionada = opcaoCategoriaIngresso == 1 ? EnumCategoriaIngresso.INGRESSO_FISICO : EnumCategoriaIngresso.INGRESSO_ONLINE;
+
+                        Ingresso novoIngresso = new Ingresso(tipoIngressoSelecionado, categoriaIngressoSelecionada);
+                        for(Sessao s: sessoes){
+                            if(s.getTituloFilme().equalsIgnoreCase(filmeDesejado) && !s.getEstadoDaSessao() && Objects.equals(horario, s.getHorario())){
+                                novoIngresso.addSessao(s);
+                                s.setIngresso(novoIngresso);
+
+                                s.ocupaAssento(s.getSalas(),numIngresso);
+                            }
+                        }
+
+                    }
                     break;
                 case 3:
                     break;

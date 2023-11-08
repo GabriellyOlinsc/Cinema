@@ -15,10 +15,20 @@ public class Sessao {
         ingresso.addSessao(this);
         salas.add(sala);
     }
+    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
+        this.estadoDaSessao = estadoDaSessao;
+        this.horario = horario;
+        this.filme = filme;
+        this.ingresso = null;
+        filme.addSessoes(this);
+
+        salas.add(sala);
+    }
 
     public void setIngresso(Ingresso ing){
         if(this.ingresso == null) {
             this.ingresso = ing;
+            ingresso.addSessao(this);
         }
     }
 
@@ -27,6 +37,7 @@ public class Sessao {
             System.out.println("Na sala localizada " + s.getLocalizacao() + " tem " + s.getnAssentos() + " assentos disponiveis.");
         }
     }
+
     public String getHorario() {
         return this.horario;
     }
@@ -59,6 +70,9 @@ public class Sessao {
         return this.filme.getTitulo();
     }
 
+    public void ocupaAssento (Sala s, int numAssentos){
+        s.setnAssentos(s.getnAssentos()- numAssentos) ;
+    }
     @Override
     public String toString() {
         return String.format("\n\nSessao {" +
