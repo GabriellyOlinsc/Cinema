@@ -132,10 +132,17 @@ public class Main {
                         Ingresso novoIngresso = new Ingresso(tipoIngressoSelecionado, categoriaIngressoSelecionada);
                         for(Sessao s: sessoes){
                             if(s.getTituloFilme().equalsIgnoreCase(filmeDesejado) && !s.getEstadoDaSessao() && Objects.equals(horario, s.getHorario())){
+                                for (Sala ambiente: s.getSalas()){
+                                    if(ambiente.getnAssentos() > numIngresso){
+                                        index = s.getSalas().indexOf(ambiente);
+                                        break;
+                                    }
+                                }
                                 novoIngresso.addSessao(s);
                                 s.setIngresso(novoIngresso);
+                                s.ocupaAssento(s.getSalaByIndex(index),numIngresso); //VER COMO PEGAR A SALA ESPECIFICA
+                                System.out.print(s.toString());
 
-                                s.ocupaAssento(s.getSalas(),numIngresso);
                             }
                         }
 

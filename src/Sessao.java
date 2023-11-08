@@ -73,6 +73,9 @@ public class Sessao {
     public void ocupaAssento (Sala s, int numAssentos){
         s.setnAssentos(s.getnAssentos()- numAssentos) ;
     }
+    public Sala getSalaByIndex(int index){
+        return salas.get(index);
+    }
     @Override
     public String toString() {
         return String.format("\n\nSessao {" +
