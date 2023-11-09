@@ -213,7 +213,7 @@ public class Main {
             duracaoFilme = input.nextInt();
         }while (duracaoFilme<=0);
 
-        System.out.print("Genero do Filme:");
+        System.out.println("Genero do Filme:");
 
         for (EnumGeneroFilme genero : EnumGeneroFilme.values()) {
             System.out.println(genero.ordinal() + 1 + " - " + genero);
