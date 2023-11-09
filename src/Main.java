@@ -39,6 +39,7 @@ public class Main {
 
         int opcao = 0;
 
+        System.out.println();
         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         System.out.println("SISTEMA DE GERENCIAMENTO CINEMATOGRAFICO");
         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -84,11 +85,21 @@ public class Main {
                 System.out.println("========= EM ANDAMENTO =========");
                 System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
                 System.out.println("================================");
+                try{
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
                 System.out.println();
             } else {
                 System.out.println("============ EM BREVE ============");
                 System.out.println("Horario: " + s.getHorario() + " horas" + "\nFilme: " + s.getFilme().getTitulo() + "\nDuracao: " + s.getFilme().getDuracao() + " minutos");
                 System.out.println("=================================");
+                try{
+                    Thread.sleep(2000);
+                }catch (InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
                 System.out.println();
             }
         }
@@ -246,9 +257,13 @@ public class Main {
         System.out.println("\nDigite o titulo do Filme para remover a sessao: ");
         input.nextLine();
         String nome_Filme_Remover = input.nextLine();
+        input.nextLine();
+
+        System.out.println("Digite o horario do filme para remover a sessao ( HH/MM ): ");
+        String horario_Remover_Sessao = input.nextLine();
 
         for (Sessao s : sessoes){
-            if (nome_Filme_Remover.equalsIgnoreCase(s.getTituloFilme())){
+            if (nome_Filme_Remover.equalsIgnoreCase(s.getTituloFilme()) && horario_Remover_Sessao.equalsIgnoreCase(s.getHorario())){
                 sessaoRemover.add(s);
             }
         }
