@@ -16,7 +16,7 @@ public class Sessao {
         salas.add(sala);
     }
 
-    public Sessao(Filme filme, Sala sala, boolean estadoDaSessao, String horario){
+    public Sessao(Sala sala, boolean estadoDaSessao, String horario,Filme filme){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
