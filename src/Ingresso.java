@@ -9,11 +9,9 @@ public class Ingresso {
         this.sessao = null;
     }
 
-    public void addSessao(Sessao ses){
-        if(this.sessao == null)
+    public void addSessao(Sessao ses) {
+        if (this.sessao == null)
             this.sessao = ses;
-        else
-            throw new IllegalArgumentException("A sessão precisa estar vazia para adicionar.");
     }
 
     public EnumTipoIngresso getTipo() {
@@ -28,18 +26,16 @@ public class Ingresso {
         return this.sessao;
     }
 
-    public void delSessao(){
+    public void delSessao() {
         if (sessao != null)
             this.sessao = null;
-        else
-            throw new IllegalArgumentException("A sessão não pode estar vazia para deletar.");
     }
 
     @Override
     public String toString() {
-        return String.format( "%nIngresso {" +
-                "%nTipo = " + this.tipo +
-                ", %nCategoria = " + this.categoria +
-                '}');
+        return String.format( "%n\tIngresso {" +
+                "%n\t\tTipo = " + this.tipo +
+                ", %n\t\tCategoria = " + this.categoria +
+                " }");
     }
 }

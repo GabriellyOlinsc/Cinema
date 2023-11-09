@@ -34,10 +34,9 @@ public class Sala {
 
     @Override
     public String toString() {
-        return String.format("\nSala{" +
-                "\nnAssentos=" + nAssentos +
-                ",\n tipoTela='" + tipoTela + '\'' +
-                ",\n localizacao='" + localizacao + '\'' +
-                '}');
+        return String.format("\n\n\tSala{" +
+                "\n\t\tNumero de Assentos = " + nAssentos +
+                ",\n\t\tTipoTela = ' " + tipoTela + " ' " +
+                ",\n\t\tLocalizacao = ' " + localizacao + " ' \n \t\t}\n");
     }
 }

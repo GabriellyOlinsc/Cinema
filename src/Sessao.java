@@ -15,7 +15,8 @@ public class Sessao {
         ingresso.addSessao(this);
         salas.add(sala);
     }
-    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
+
+    public Sessao(Filme filme, Sala sala, boolean estadoDaSessao, String horario){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
@@ -79,11 +80,20 @@ public class Sessao {
     @Override
     public String toString() {
         return String.format("\n\nSessao {" +
-                "\n EstadoDaSessao = " + estadoDaSessao +
-                ", \nHorario = " + horario + "  " +
-                this.ingresso.toString()+ "  " +
+                "\n\nEstadoDaSessao = " + estadoDaSessao + " \n " +
+                "Horario = " + horario + " \n " +
+                this.ingresso.toString()+ " \n " +
                 this.filme.toString() +
-                ", \nSalas = " + salas.toString() +
-                '}');
+                ",\n\nSalas = " + salas.toString() +
+                "}\n\n");
+    }
+
+    public String toString2() {
+        return String.format("\n\nSessao {" +
+                "\n\n\tEstadoDaSessao = " + estadoDaSessao + " \n " +
+                "\tHorario = " + horario + " \n " +
+                "\t" + this.filme.toString() +
+                ",\n\nSalas = " + salas + "\n" +
+                "}\n");
     }
 }
