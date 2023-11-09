@@ -173,7 +173,7 @@ public class Main {
             int confirmacao;
             do {
                 System.out.print("Confimar venda de ingresso (digite 1 para confirmar e 0 para cancelar): ");
-                 confirmacao = input.nextInt();
+                confirmacao = input.nextInt();
             }while(confirmacao>1 || confirmacao<0);
 
             if(confirmacao == 1) {
