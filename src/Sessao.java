@@ -84,7 +84,7 @@ public class Sessao {
                 "Horario = " + horario + " \n " +
                 this.ingresso.toString()+ " \n " +
                 this.filme.toString() +
-                ",\n\nSalas = " + salas.toString() +
+                ",\n\nSalas = " + salas +
                 "}\n\n");
     }
 
