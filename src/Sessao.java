@@ -5,7 +5,7 @@ public class Sessao {
     private String horario;
     private Ingresso ingresso;
     private final Filme filme;
-    private final ArrayList<Sala> salas = new ArrayList<>(); //PODE FAZER ISSO? R: Pode sim
+    private final ArrayList<Sala> salas = new ArrayList<>();
     public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme, Ingresso ingresso){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;

@@ -222,7 +222,7 @@ public class Main {
 
                         novoIngresso.addSessao(s);
                         s.setIngresso(novoIngresso);
-                        s.ocupaAssento(s.getSalaByIndex(index), numIngresso); //VER COMO PEGAR A SALA ESPECIFICA
+                        s.ocupaAssento(s.getSalaByIndex(index), numIngresso);
 
                         System.out.printf("%nIngresso gerado com sucesso!%n%n------------%nTipo do Ingresso: %s%nCategoria: %s%nFilme: %s%nHorario: %s%nSala: %s%n------------%n%n", novoIngresso.getTipo(), novoIngresso.getCategoria(), s.getTituloFilme(), s.getHorario(), localSala);
                     }
@@ -322,32 +322,35 @@ public class Main {
     }
 
     public static void removerSessao(ArrayList<Sessao> sessoes, Scanner input) {
-        System.out.println("\n=============== REMOVER SESSAO ===============\n");
+        System.out.println("=============== REMOVER SESSAO ===============\n");
 
-        System.out.println("\n-=-=-=-= LISTANDO SESSOES -=-=-=-=");
+        System.out.println("\n-=-=-=-= LISTANDO SESSOES NÃO INICIADAS -=-=-=-=");
 
         for (Sessao ses : sessoes) {
-            System.out.println(ses.toString2());
-            System.out.println("=================================");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+            if(!ses.getEstadoDaSessao()) {
+                System.out.printf("Filme: %s%nHorario: %s%n%s%n", ses.getTituloFilme(), ses.getHorario(), ses.getSalas());
+                System.out.println("=================================");
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
+
         ArrayList<Sessao> sessaoRemover = new ArrayList<>();
         input.nextLine();
         boolean existeFilme = false;
 
         // Pedindo os dados para comparar e remover
 
-        System.out.println("\nDigite o titulo do Filme para remover a sessao: ");
+        System.out.print("\nDigite o titulo do Filme para remover a sessao: ");
         String nome_Filme_Remover = input.nextLine();
 
-        System.out.println("Digite o horario do filme para remover a sessao ( HH:MM ): ");
+        System.out.print("Digite o horario do filme para remover a sessao ( HH:MM ): ");
         String horario_Remover_Sessao = input.nextLine();
 
-        System.out.println("Digite a localizacao da sala para conseguir remover a sessao: ");
+        System.out.print("Digite a localizacao da sala para conseguir remover a sessao: ");
         String localizacaoSala_Remover = input.nextLine();
 
         for (Sessao s : sessoes) {
