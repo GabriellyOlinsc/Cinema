@@ -1,3 +1,7 @@
+package Control;
+
+import Model.*;
+
 import java.util.*;
 
 public class Main {
@@ -136,7 +140,7 @@ public class Main {
                 for (Sala sala : s.getSalas()) {
                     if (sala.getnAssentos() > numIngresso) {
                         System.out.printf("Horarios: %s    ", s.getHorario());
-                        System.out.printf(" Sala: %s     Assentos disponiveis: %d%n", sala.getLocalizacao(), sala.getnAssentos());
+                        System.out.printf("Sala: %s     Assentos disponiveis: %d%n", sala.getLocalizacao(), sala.getnAssentos());
                         temSalasDisponiveis = true;
                     }
                 }
@@ -145,7 +149,7 @@ public class Main {
             }
         }
         if (!estaNoCatalogo) {
-            System.out.println("\nSinto Muito. Filme não encontrado no catalogo.\n");
+            System.out.println("\nSinto Muito. Model.Filme não encontrado no catalogo.\n");
         } else if (!temSalasDisponiveis) {
             System.out.println("\nSinto Muito. Não existem salas disponiveis que atendam o volume de ingressos. ");
         } else {
@@ -289,11 +293,11 @@ public class Main {
         if (!tipoTela.equalsIgnoreCase("reta e simples") && !tipoTela.equalsIgnoreCase("curvada"))
             throw new InputMismatchException("\nERRO. Digite um tipo de tela valido ( Reta e Simples / Curvada ). Tente novamente.");
 
-        System.out.print("Localizacao da Sala: ");
+        System.out.print("Localizacao da Model.Sala: ");
         String localizacaoSala = input.nextLine();
 
         if (localizacaoSala.equalsIgnoreCase(""))
-            throw new InputMismatchException("\nERRO. A localizacao da Sala precisa ser informada. Tente novamente.");
+            throw new InputMismatchException("\nERRO. A localizacao da Model.Sala precisa ser informada. Tente novamente.");
 
         // Estado da sessão
 
@@ -315,7 +319,7 @@ public class Main {
         }
 
         if (sessoes.add(new Sessao(new Sala(numeroAssentos, tipoTela, localizacaoSala), estadoSessao, horaSessao, novoFilme))) {
-            System.out.println("\nSessao adicionada com sucesso!");
+            System.out.println("\nModel.Sessao adicionada com sucesso!");
         } else {
             throw new IllegalArgumentException("\nErro ao adicionar a sessão. Verifique se os dados fornecidos sao validos.\n");
         }

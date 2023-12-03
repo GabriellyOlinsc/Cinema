@@ -1,3 +1,5 @@
+package Model;
+
 public enum EnumCategoriaIngresso {
     INGRESSO_FISICO(28),
     INGRESSO_ONLINE(20);

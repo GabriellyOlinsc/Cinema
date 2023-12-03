@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.ArrayList;
 
 public class Sessao {
@@ -16,7 +18,7 @@ public class Sessao {
         salas.add(sala);
     }
 
-    public Sessao(Sala sala, boolean estadoDaSessao, String horario,Filme filme){
+    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
@@ -25,7 +27,35 @@ public class Sessao {
 
         salas.add(sala);
     }
+    public static class SessaoBuilder implements Builder{
+        private boolean estadoDaSessao;
+        private String horario;
+        private Ingresso ingresso;
+        private Filme filme;
+        private final ArrayList<Sala> salas = new ArrayList<>();
 
+        @Override
+        public Builder buildFilme(String titulo, int duracao, EnumGeneroFilme genero) {
+            this.filme = new Filme(titulo, duracao, genero);
+            return this;
+        }
+
+        @Override
+        public Builder buildIngresso(EnumTipoIngresso tipo, EnumCategoriaIngresso categoria) {
+            this.ingresso = new Ingresso(tipo, categoria);
+            return this;
+        }
+
+        @Override
+        public Builder buildSala(int assentos, String tipoTela, String localizacao) {
+            return null;
+        }
+
+        @Override
+        public Sessao build() {
+            return null;
+        }
+    }
     public void setIngresso(Ingresso ing){
         if(this.ingresso == null) {
             this.ingresso = ing;
@@ -86,14 +116,5 @@ public class Sessao {
                 this.filme.toString() +
                 ",\n\nSalas = " + salas +
                 "}\n\n");
-    }
-
-    public String toString2() {
-        return String.format("\n\nSessao {" +
-                "\n\n\tEstadoDaSessao = " + estadoDaSessao + " \n " +
-                "\tHorario = " + horario + " \n " +
-                "\t" + this.filme.toString() +
-                ",\n\nSalas = " + salas + "\n" +
-                "}\n");
     }
 }

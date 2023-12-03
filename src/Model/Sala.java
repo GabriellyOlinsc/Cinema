@@ -1,3 +1,5 @@
+package Model;
+
 public class Sala {
     private int nAssentos;
     private String tipoTela;

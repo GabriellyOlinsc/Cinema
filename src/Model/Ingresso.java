@@ -1,3 +1,5 @@
+package Model;
+
 public class Ingresso {
     private final EnumTipoIngresso tipo;
     private final EnumCategoriaIngresso categoria;
