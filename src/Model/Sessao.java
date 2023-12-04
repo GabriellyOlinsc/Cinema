@@ -8,17 +8,20 @@ public class Sessao {
     private Ingresso ingresso;
     private final Filme filme;
     private final ArrayList<Sala> salas = new ArrayList<>();
-    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme, Ingresso ingresso){
+    private Sessao(ArrayList<Sala> salas, boolean estadoDaSessao, String horario, Filme filme, Ingresso ingresso){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
         this.ingresso = ingresso;
+
+        this.salas.addAll(salas);
         filme.addSessoes(this);
-        ingresso.addSessao(this);
-        salas.add(sala);
+
+        if (ingresso != null)
+            ingresso.addSessao(this);
     }
 
-    public Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
+    private Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
         this.estadoDaSessao = estadoDaSessao;
         this.horario = horario;
         this.filme = filme;
@@ -35,6 +38,18 @@ public class Sessao {
         private final ArrayList<Sala> salas = new ArrayList<>();
 
         @Override
+        public Builder buildEstadoSessao(boolean estadoSessao) {
+            this.estadoDaSessao = estadoSessao;
+            return this;
+        }
+
+        @Override
+        public Builder buildHorario(String horario) {
+            this.horario = horario;
+            return this;
+        }
+
+        @Override
         public Builder buildFilme(String titulo, int duracao, EnumGeneroFilme genero) {
             this.filme = new Filme(titulo, duracao, genero);
             return this;
@@ -48,12 +63,13 @@ public class Sessao {
 
         @Override
         public Builder buildSala(int assentos, String tipoTela, String localizacao) {
-            return null;
+            this.salas.add(new Sala(assentos, tipoTela, localizacao));
+            return this;
         }
 
         @Override
         public Sessao build() {
-            return null;
+            return new Sessao(salas, estadoDaSessao, horario, filme, ingresso);
         }
     }
     public void setIngresso(Ingresso ing){

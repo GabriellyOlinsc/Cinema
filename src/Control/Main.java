@@ -8,31 +8,39 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        EnumGeneroFilme generoFilme1 = EnumGeneroFilme.ACAO;
-        EnumGeneroFilme generoFilme2 = EnumGeneroFilme.DRAMA;
+//        EnumGeneroFilme generoFilme1 = EnumGeneroFilme.ACAO;
+//        EnumGeneroFilme generoFilme2 = EnumGeneroFilme.DRAMA;
+//
+//        EnumTipoIngresso tipoIngresso = EnumTipoIngresso.MEIO_INGRESSO;
+//        EnumTipoIngresso tipoIngresso2 = EnumTipoIngresso.INGRESSO_SORTEIO;
+//
+//        EnumCategoriaIngresso categoriaIngresso1 = EnumCategoriaIngresso.INGRESSO_FISICO;
+//        EnumCategoriaIngresso categoriaIngresso2 = EnumCategoriaIngresso.INGRESSO_ONLINE;
+//
+//        Filme filme1 = new Filme("Vingadores Guerra Infinita", 90, generoFilme1);
+//        Filme filme2 = new Filme("Vingadores Ultimato", 180, generoFilme2);
+//        Filme filme3 = new Filme("Homem-Aranha 4", 87, generoFilme1);
+//        Filme filme4 = new Filme("Joker", 92, generoFilme2);
+//
+//        Ingresso ingresso1 = new Ingresso(tipoIngresso, categoriaIngresso1);
+//        Ingresso ingresso2 = new Ingresso(tipoIngresso2, categoriaIngresso2);
+//        Ingresso ingresso3 = new Ingresso(tipoIngresso, categoriaIngresso2);
+//        Ingresso ingresso4 = new Ingresso(tipoIngresso2, categoriaIngresso1);
+//
+//        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(
+//                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "19:00", filme1, ingresso1),
+//                new Sessao(new Sala(56, "Curvada", "Sala B"), true, "16:00", filme2, ingresso2),
+//                new Sessao(new Sala(76, "Reta e Simples", "Sala C"), true, "15:30", filme3, ingresso3),
+//                new Sessao(new Sala(65, "Curvada", "Sala D"), false, "20:00", filme4, ingresso4),
+//                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "22:00", filme4)));
 
-        EnumTipoIngresso tipoIngresso = EnumTipoIngresso.MEIO_INGRESSO;
-        EnumTipoIngresso tipoIngresso2 = EnumTipoIngresso.INGRESSO_SORTEIO;
-
-        EnumCategoriaIngresso categoriaIngresso1 = EnumCategoriaIngresso.INGRESSO_FISICO;
-        EnumCategoriaIngresso categoriaIngresso2 = EnumCategoriaIngresso.INGRESSO_ONLINE;
-
-        Filme filme1 = new Filme("Vingadores Guerra Infinita", 90, generoFilme1);
-        Filme filme2 = new Filme("Vingadores Ultimato", 180, generoFilme2);
-        Filme filme3 = new Filme("Homem-Aranha 4", 87, generoFilme1);
-        Filme filme4 = new Filme("Joker", 92, generoFilme2);
-
-        Ingresso ingresso1 = new Ingresso(tipoIngresso, categoriaIngresso1);
-        Ingresso ingresso2 = new Ingresso(tipoIngresso2, categoriaIngresso2);
-        Ingresso ingresso3 = new Ingresso(tipoIngresso, categoriaIngresso2);
-        Ingresso ingresso4 = new Ingresso(tipoIngresso2, categoriaIngresso1);
-
-        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(
-                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "19:00", filme1, ingresso1),
-                new Sessao(new Sala(56, "Curvada", "Sala B"), true, "16:00", filme2, ingresso2),
-                new Sessao(new Sala(76, "Reta e Simples", "Sala C"), true, "15:30", filme3, ingresso3),
-                new Sessao(new Sala(65, "Curvada", "Sala D"), false, "20:00", filme4, ingresso4),
-                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "22:00", filme4)));
+            Sessao sessao = new Sessao.SessaoBuilder()
+                    .buildEstadoSessao(true)
+                    .buildHorario("17:00")
+                    .buildFilme("Homem Aranha 4", 145, EnumGeneroFilme.ACAO)
+                    .buildSala(74, "Simples e Reta", "Sala A")
+                    .buildIngresso(EnumTipoIngresso.MEIO_INGRESSO, EnumCategoriaIngresso.INGRESSO_FISICO)
+                    .build();
 
         int opcao = 0;
 
