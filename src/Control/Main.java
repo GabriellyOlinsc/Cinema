@@ -5,52 +5,51 @@ import Model.*;
 import java.util.*;
 
 public class Main {
+    private static final Scanner input = new Scanner(System.in);
+    private static final String FUNCIONARIO = "1";
+    private static final String CLIENTE = "2";
+    private static String login = "";
+    private static String senha = "";
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
 
-//        EnumGeneroFilme generoFilme1 = EnumGeneroFilme.ACAO;
-//        EnumGeneroFilme generoFilme2 = EnumGeneroFilme.DRAMA;
-//
-//        EnumTipoIngresso tipoIngresso = EnumTipoIngresso.MEIO_INGRESSO;
-//        EnumTipoIngresso tipoIngresso2 = EnumTipoIngresso.INGRESSO_SORTEIO;
-//
-//        EnumCategoriaIngresso categoriaIngresso1 = EnumCategoriaIngresso.INGRESSO_FISICO;
-//        EnumCategoriaIngresso categoriaIngresso2 = EnumCategoriaIngresso.INGRESSO_ONLINE;
-//
-//        Filme filme1 = new Filme("Vingadores Guerra Infinita", 90, generoFilme1);
-//        Filme filme2 = new Filme("Vingadores Ultimato", 180, generoFilme2);
-//        Filme filme3 = new Filme("Homem-Aranha 4", 87, generoFilme1);
-//        Filme filme4 = new Filme("Joker", 92, generoFilme2);
-//
-//        Ingresso ingresso1 = new Ingresso(tipoIngresso, categoriaIngresso1);
-//        Ingresso ingresso2 = new Ingresso(tipoIngresso2, categoriaIngresso2);
-//        Ingresso ingresso3 = new Ingresso(tipoIngresso, categoriaIngresso2);
-//        Ingresso ingresso4 = new Ingresso(tipoIngresso2, categoriaIngresso1);
-//
-//        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(
-//                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "19:00", filme1, ingresso1),
-//                new Sessao(new Sala(56, "Curvada", "Sala B"), true, "16:00", filme2, ingresso2),
-//                new Sessao(new Sala(76, "Reta e Simples", "Sala C"), true, "15:30", filme3, ingresso3),
-//                new Sessao(new Sala(65, "Curvada", "Sala D"), false, "20:00", filme4, ingresso4),
-//                new Sessao(new Sala(49, "Reta e Simples", "Sala A"), false, "22:00", filme4)));
 
-            Sessao sessao = new Sessao.SessaoBuilder()
-                    .buildEstadoSessao(true)
-                    .buildHorario("17:00")
-                    .buildFilme("Homem Aranha 4", 145, EnumGeneroFilme.ACAO)
-                    .buildSala(74, "Simples e Reta", "Sala A")
-                    .buildIngresso(EnumTipoIngresso.MEIO_INGRESSO, EnumCategoriaIngresso.INGRESSO_FISICO)
-                    .build();
+        Sessao.SessaoBuilder sessao = new Sessao.SessaoBuilder();
+        Diretor diretor = new Diretor();
+        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(diretor.construirSessaoJoker(sessao), diretor.construirSessaoVingadores(sessao),
+                diretor.construirSessaoInterestelar(sessao)));
 
         int opcao = 0;
 
-        System.out.println();
-        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+        String opcao_Cargo = "";
+
+        System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         System.out.println("SISTEMA DE GERENCIAMENTO CINEMATOGRAFICO");
-        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-        System.out.println();
+        System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 
         while (opcao != 5) {
+            do {
+
+                do {
+                    exibirOpcoes();
+                    opcao_Cargo = input.nextLine();
+                    if (opcao_Cargo.equals(FUNCIONARIO)) {
+                        if (autenticarFunc())
+                            System.out.println("Login valido!");
+                        else
+                            System.out.println("Valor invalido. Tente novamente.");
+
+                    } else if (opcao_Cargo.equals(CLIENTE)) {
+                        autenticarCliente();
+
+                    } else {
+                        System.out.println("\nValor invalido. Tente novamente.\n");
+                    }
+                }while(!login.equalsIgnoreCase("Kauan da Silveira") && !senha.equalsIgnoreCase("1234"));
+
+            }while(!opcao_Cargo.equals(FUNCIONARIO) && !opcao_Cargo.equals(CLIENTE));
+
+            mensagemBoasVindas();
+
             System.out.print("1 - Visualizar as sessoes do dia\n2 - Venda de Ingressos\n3 - Adicionar Sessao\n4 - Remover Sessao\n5 - Sair do programa\n\nSelecione uma opcao: ");
             opcao = input.nextInt();
             System.out.println();
@@ -108,8 +107,34 @@ public class Main {
 
     // --------------------- MÉTODOS ESTÁTICOS --------------------- //
 
+    private static void exibirOpcoes(){
+        System.out.println("+-------------------+-------------------+");
+        System.out.println("1 - Funcionario\n2 - Cliente");
+        System.out.println("+-------------------+-------------------+");
+        System.out.println("\nSelecione seu cargo: ");
+    }
 
-    public static void consultarSessao(ArrayList<Sessao> sessoes) {
+    private static boolean autenticarFunc(){
+        System.out.println("\n================================");
+        System.out.println("Digite seu usuario: ");
+        login = input.nextLine();
+        System.out.println("Digite sua senha: ");
+        senha = input.nextLine();
+        System.out.println("================================\n");
+        return login.equalsIgnoreCase("Kauan da Silveira") && senha.equalsIgnoreCase("1234");
+    }
+
+    private static void autenticarCliente(){
+        System.out.println("Digite seu nome: ");
+        login = input.nextLine();
+    }
+
+    public static void mensagemBoasVindas(){
+        System.out.println("\n+-------------------+-------------------+-------------------+");
+        System.out.println("\tSeja bem vindo(a) " + login.toUpperCase() + "!");
+        System.out.println("+-------------------+-------------------+-------------------+\n\n");
+    }
+    private static void consultarSessao(ArrayList<Sessao> sessoes) {
         for (Sessao s : sessoes) {
             if (s.getEstadoDaSessao()) {
                 System.out.println("========= EM ANDAMENTO ==========");
@@ -127,7 +152,7 @@ public class Main {
         }
     }
 
-    public static void vendaIngresso(ArrayList<Sessao> sessoes, Scanner input) {
+    private static void vendaIngresso(ArrayList<Sessao> sessoes, Scanner input) {
 
         System.out.print("========= VENDA DE INGRESSOS =========\nSelecione o filme: ");
         input.nextLine();     //para limpar o buffer
@@ -244,7 +269,7 @@ public class Main {
         }
     }
 
-    public static void adicionarSessao(ArrayList<Sessao> sessoes, Scanner input) {
+    private static void adicionarSessao(ArrayList<Sessao> sessoes, Scanner input) {
         System.out.println("\n=============== ADICIONAR SESSAO ===============\n");
 
         // Informações sobre o filme
@@ -284,7 +309,6 @@ public class Main {
 
         EnumGeneroFilme generoFilme = EnumGeneroFilme.values()[opcaogeneroFilme - 1];
 
-        Filme novoFilme = new Filme(tituloFilme, duracaoFilme, generoFilme);
 
         // Informações sobre a sala
 
@@ -326,14 +350,15 @@ public class Main {
             throw new InputMismatchException("\nERRO. O formato do horario da sessao deve ser HH:MM. Tente novamente.\n");
         }
 
-        if (sessoes.add(new Sessao(new Sala(numeroAssentos, tipoTela, localizacaoSala), estadoSessao, horaSessao, novoFilme))) {
+        if (sessoes.add(new Sessao.SessaoBuilder().buildSala(numeroAssentos, tipoTela, localizacaoSala).buildEstadoSessao(estadoSessao).buildHorario(horaSessao)
+                .buildFilme(tituloFilme, duracaoFilme, generoFilme).build())) {
             System.out.println("\nModel.Sessao adicionada com sucesso!");
         } else {
             throw new IllegalArgumentException("\nErro ao adicionar a sessão. Verifique se os dados fornecidos sao validos.\n");
         }
     }
 
-    public static void removerSessao(ArrayList<Sessao> sessoes, Scanner input) {
+    private static void removerSessao(ArrayList<Sessao> sessoes, Scanner input) {
         System.out.println("=============== REMOVER SESSAO ===============\n");
 
         System.out.println("\n-=-=-=-= LISTANDO SESSOES NÃO INICIADAS -=-=-=-=");
