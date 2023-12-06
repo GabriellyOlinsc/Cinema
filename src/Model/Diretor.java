@@ -12,7 +12,7 @@ public class Diretor {
     public Sessao construirSessaoVingadores(Sessao.SessaoBuilder sessao){
         return sessao.buildHorario("19:00")
                 .buildFilme("Vingadores Ultimato", 110, EnumGeneroFilme.ACAO)
-                .buildEstadoSessao(true)
+                .buildEstadoSessao(false)
                 .buildSala(60, "Curvada", "Sala B")
                 .build();
     }
@@ -20,7 +20,7 @@ public class Diretor {
     public Sessao construirSessaoInterestelar(Sessao.SessaoBuilder sessao){
         return sessao.buildHorario("22:00")
                 .buildFilme("Interestelar", 160, EnumGeneroFilme.DRAMA)
-                .buildEstadoSessao(true)
+                .buildEstadoSessao(false)
                 .buildSala(85, "Curvada", "Sala C")
                 .build();
     }

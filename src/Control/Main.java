@@ -18,87 +18,86 @@ public class Main {
         ArrayList<Sessao> sessoes = new ArrayList<>(List.of(diretor.construirSessaoJoker(sessao), diretor.construirSessaoVingadores(sessao),
                 diretor.construirSessaoInterestelar(sessao)));
 
-        int opcao = 0;
-
+        int opcao;
+        boolean continuar = true;
+        boolean continuarCargo = true;
+        boolean autenticado = false;
         String opcao_Cargo = "";
 
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         System.out.println("SISTEMA DE GERENCIAMENTO CINEMATOGRAFICO");
         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 
-        while (opcao != 5) {
-            do {
 
-                do {
-                    exibirOpcoes();
-                    opcao_Cargo = input.nextLine();
-                    if (opcao_Cargo.equals(FUNCIONARIO)) {
-                        if (autenticarFunc())
-                            System.out.println("Login valido!");
-                        else
-                            System.out.println("Valor invalido. Tente novamente.");
-
-                    } else if (opcao_Cargo.equals(CLIENTE)) {
-                        autenticarCliente();
-
-                    } else {
-                        System.out.println("\nValor invalido. Tente novamente.\n");
-                    }
-                }while(!login.equalsIgnoreCase("Kauan da Silveira") && !senha.equalsIgnoreCase("1234"));
-
-            }while(!opcao_Cargo.equals(FUNCIONARIO) && !opcao_Cargo.equals(CLIENTE));
+        while(continuar) {
+            opcao_Cargo = login();
 
             mensagemBoasVindas();
+            while (continuarCargo) {
+                if (opcao_Cargo.equals(FUNCIONARIO)) {
+                    menuFuncionario();
+                } else {
+                    menuCliente();
+                }
+                opcao = input.nextInt();
 
-            System.out.print("1 - Visualizar as sessoes do dia\n2 - Venda de Ingressos\n3 - Adicionar Sessao\n4 - Remover Sessao\n5 - Sair do programa\n\nSelecione uma opcao: ");
-            opcao = input.nextInt();
-            System.out.println();
+                System.out.println();
+                switch (opcao) {
+                    case 1:
+                        consultarSessao(sessoes);
+                        break;
+                    case 2:
+                        try {
+                            vendaIngresso(sessoes);
+                        } catch (InputMismatchException e) {
+                            System.out.println("\nERRO. Voce digitou um valor invalido!\n");
 
-            switch (opcao) {
-                case 1:
-                    consultarSessao(sessoes);
-                    break;
+                        } catch (IllegalArgumentException er) {
+                            System.out.println("Ops! Parece que deu problema na hora de vender um ingresso!");
+                        }
+                        break;
+                    case 3:
+                        if (opcao_Cargo.equals(FUNCIONARIO)) {
+                            try {
+                                adicionarSessao(sessoes);
 
-                case 2:
-                    try {
-                        vendaIngresso(sessoes, input);
-                    } catch (InputMismatchException e) {
-                        System.out.println("\nERRO. Voce digitou um valor invalido!\n");
+                            } catch (InputMismatchException e) {
+                                System.out.println(e.getMessage());
 
-                    } catch (IllegalArgumentException er) {
-                        System.out.println("Ops! Parece que deu problema na hora de vender um ingresso!");
-                    }
+                            } catch (IllegalArgumentException er) {
+                                System.out.println("Ops! Parece que deu problema na hora de adicionar a sessao!");
+                            }
+                        } else
+                            continuarCargo = false;
+                        break;
 
-                    break;
-                case 3:
-                    try {
-                        adicionarSessao(sessoes, input);
-
-                    }catch (InputMismatchException e){
-                        System.out.println(e.getMessage());
-
-                    }catch (IllegalArgumentException er) {
-                        System.out.println("Ops! Parece que deu problema na hora de adicionar a sessao!");
-                    }
-
-                    break;
-
-                case 4:
-                    try {
-                        removerSessao(sessoes, input);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    break;
-
-                case 5:
-                    System.out.println("O programa ira encerrar. Agradecemos pelo contato!");
-                    break;
-
-                default:
-                    System.out.println("Ops! Parece que voce digitou uma opcao invalida. Tente novamente.\n");
-                    break;
+                    case 4:
+                        if (opcao_Cargo.equals(FUNCIONARIO)) {
+                            try {
+                                removerSessao(sessoes);
+                            } catch (IllegalArgumentException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        } else
+                            System.out.println("Ops! Parece que voce digitou uma opcao invalida. Tente novamente.\n");
+                        break;
+                    case 5:
+                        if (opcao_Cargo.equals(FUNCIONARIO)) {
+                            continuarCargo = false;
+                        } else
+                            System.out.println("Ops! Parece que voce digitou uma opcao invalida. Tente novamente.\n");
+                        break;
+                    default:
+                        System.out.println("Ops! Parece que voce digitou uma opcao invalida. Tente novamente.\n");
+                        break;
+                }
+                input.nextLine();
+            }
+            System.out.print("Tem certeza que deseja finalizar o programa? (Digite 1 para sim): ");
+            int opcaoFinal = input.nextInt();
+            if (opcaoFinal == 1) {
+                System.out.println("\nO programa ira encerrar. Agradecemos pelo contato!");
+                continuar = false;
             }
             input.nextLine();
         }
@@ -108,25 +107,69 @@ public class Main {
     // --------------------- MÉTODOS ESTÁTICOS --------------------- //
 
     private static void exibirOpcoes(){
-        System.out.println("+-------------------+-------------------+");
+        System.out.println("\n+-------------------+-------------------+");
         System.out.println("1 - Funcionario\n2 - Cliente");
         System.out.println("+-------------------+-------------------+");
-        System.out.println("\nSelecione seu cargo: ");
+        System.out.print("\nSelecione seu cargo: ");
+    }
+
+    private static void menuFuncionario(){
+        System.out.print("1 - Visualizar as sessoes do dia\n2 - Venda de Ingressos\n3 - Adicionar Sessao\n4 - Remover Sessao\n5 - Sair do programa\n\nSelecione uma opcao: ");
+    }
+
+    private static void menuCliente(){
+        System.out.print("1 - Visualizar as sessoes do dia\n2 - Comprar Ingresso\n3 - Sair do programa\n\nSelecione uma opcao: ");
+
+    }
+
+    private static String login(){
+        String opcao_Cargo;
+        do {
+            exibirOpcoes();
+            opcao_Cargo = input.nextLine();
+            if (opcao_Cargo.equals(FUNCIONARIO)) {
+                if (autenticarFunc()) {
+                    System.out.println("Login valido!");
+                    break;
+                } else
+                    System.out.println("Valor invalido. Tente novamente.");
+
+            } else if (opcao_Cargo.equals(CLIENTE)) {
+                autenticarCliente();
+                break;
+
+            } else {
+                System.out.println("\nValor invalido. Tente novamente.\n");
+            }
+        } while (true);
+
+        return opcao_Cargo;
     }
 
     private static boolean autenticarFunc(){
+        login = "";
+        senha = "";
         System.out.println("\n================================");
-        System.out.println("Digite seu usuario: ");
+        System.out.print("Digite seu usuario: ");
         login = input.nextLine();
-        System.out.println("Digite sua senha: ");
+        System.out.print("Digite sua senha: ");
         senha = input.nextLine();
         System.out.println("================================\n");
-        return login.equalsIgnoreCase("Kauan da Silveira") && senha.equalsIgnoreCase("1234");
+        return login.equalsIgnoreCase("admin") && senha.equalsIgnoreCase("1234");
     }
 
     private static void autenticarCliente(){
-        System.out.println("Digite seu nome: ");
-        login = input.nextLine();
+        login = "";
+        while (true) {
+            System.out.print("Digite seu nome: ");
+            login = input.nextLine();
+
+            if (!login.trim().equalsIgnoreCase("")) {
+                break;
+            }
+
+            System.out.println("Erro. Digite um valor para o nome.");
+        }
     }
 
     public static void mensagemBoasVindas(){
@@ -152,10 +195,10 @@ public class Main {
         }
     }
 
-    private static void vendaIngresso(ArrayList<Sessao> sessoes, Scanner input) {
-
+    private static void vendaIngresso(ArrayList<Sessao> sessoes) {
         System.out.print("========= VENDA DE INGRESSOS =========\nSelecione o filme: ");
         input.nextLine();     //para limpar o buffer
+
         String filmeDesejado = input.nextLine();
         int numIngresso;
 
@@ -164,25 +207,27 @@ public class Main {
             numIngresso = input.nextInt();
         } while (numIngresso <= 0);
 
+
         //VERiFICANDO FILME, NUMERO DE ASSENTOS + SALAS DISPONIVEIS
+
         boolean estaNoCatalogo = false;
         boolean temSalasDisponiveis = false;
         List<String> horariosDisponiveis = new ArrayList<>();
         for (Sessao s : sessoes) {
             if (s.getTituloFilme().equalsIgnoreCase(filmeDesejado) && !s.getEstadoDaSessao()) {
+                estaNoCatalogo = true;
                 for (Sala sala : s.getSalas()) {
                     if (sala.getnAssentos() > numIngresso) {
                         System.out.printf("Horarios: %s    ", s.getHorario());
                         System.out.printf("Sala: %s     Assentos disponiveis: %d%n", sala.getLocalizacao(), sala.getnAssentos());
                         temSalasDisponiveis = true;
+                        horariosDisponiveis.add(s.getHorario());
                     }
                 }
-                horariosDisponiveis.add(s.getHorario());
-                estaNoCatalogo = true;
             }
         }
         if (!estaNoCatalogo) {
-            System.out.println("\nSinto Muito. Model.Filme não encontrado no catalogo.\n");
+            System.out.println("\nSinto Muito. Filme não disponível no catalogo.\n");
         } else if (!temSalasDisponiveis) {
             System.out.println("\nSinto Muito. Não existem salas disponiveis que atendam o volume de ingressos. ");
         } else {
@@ -269,7 +314,7 @@ public class Main {
         }
     }
 
-    private static void adicionarSessao(ArrayList<Sessao> sessoes, Scanner input) {
+    private static void adicionarSessao(ArrayList<Sessao> sessoes) {
         System.out.println("\n=============== ADICIONAR SESSAO ===============\n");
 
         // Informações sobre o filme
@@ -325,11 +370,11 @@ public class Main {
         if (!tipoTela.equalsIgnoreCase("reta e simples") && !tipoTela.equalsIgnoreCase("curvada"))
             throw new InputMismatchException("\nERRO. Digite um tipo de tela valido ( Reta e Simples / Curvada ). Tente novamente.");
 
-        System.out.print("Localizacao da Model.Sala: ");
+        System.out.print("Localizacao da Sala: ");
         String localizacaoSala = input.nextLine();
 
         if (localizacaoSala.equalsIgnoreCase(""))
-            throw new InputMismatchException("\nERRO. A localizacao da Model.Sala precisa ser informada. Tente novamente.");
+            throw new InputMismatchException("\nERRO. A localizacao da Sala precisa ser informada. Tente novamente.");
 
         // Estado da sessão
 
@@ -352,13 +397,13 @@ public class Main {
 
         if (sessoes.add(new Sessao.SessaoBuilder().buildSala(numeroAssentos, tipoTela, localizacaoSala).buildEstadoSessao(estadoSessao).buildHorario(horaSessao)
                 .buildFilme(tituloFilme, duracaoFilme, generoFilme).build())) {
-            System.out.println("\nModel.Sessao adicionada com sucesso!");
+            System.out.println("\nSessao adicionada com sucesso!");
         } else {
             throw new IllegalArgumentException("\nErro ao adicionar a sessão. Verifique se os dados fornecidos sao validos.\n");
         }
     }
 
-    private static void removerSessao(ArrayList<Sessao> sessoes, Scanner input) {
+    private static void removerSessao(ArrayList<Sessao> sessoes) {
         System.out.println("=============== REMOVER SESSAO ===============\n");
 
         System.out.println("\n-=-=-=-= LISTANDO SESSOES NÃO INICIADAS -=-=-=-=");
@@ -409,4 +454,6 @@ public class Main {
         else
             throw new IllegalArgumentException("\nERRO. A sessao nao foi removida com sucesso. Verifique se os dados informados estao corretos e tente novamente.\n");
     }
+
+
 }
