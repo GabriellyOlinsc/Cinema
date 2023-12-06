@@ -6,7 +6,6 @@ public enum EnumGeneroFilme {
     SUSPENSE("Suspense"),
     COMEDIA("Comedia"),
     DRAMA("Drama");
-
     private final String descricao;
 
     EnumGeneroFilme(String descricao){

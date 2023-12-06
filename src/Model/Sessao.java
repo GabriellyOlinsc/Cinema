@@ -21,15 +21,6 @@ public class Sessao {
             ingresso.addSessao(this);
     }
 
-    private Sessao(Sala sala, boolean estadoDaSessao, String horario, Filme filme){
-        this.estadoDaSessao = estadoDaSessao;
-        this.horario = horario;
-        this.filme = filme;
-        this.ingresso = null;
-        filme.addSessoes(this);
-
-        salas.add(sala);
-    }
     public static class SessaoBuilder implements Builder{
         private boolean estadoDaSessao;
         private String horario;
@@ -79,34 +70,17 @@ public class Sessao {
         }
     }
 
-    public void cadeirasDisponiveis(){
-        for (Sala s : salas){
-            System.out.println("Na sala localizada " + s.getLocalizacao() + " tem " + s.getnAssentos() + " assentos disponiveis.");
-        }
-    }
-
     public String getHorario() {
         return this.horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
     }
 
     public boolean getEstadoDaSessao() {
         return this.estadoDaSessao;
     }
 
-    public void setEstadoDaSessao(boolean estado) {
-        this.estadoDaSessao = estado;
-    }
 
     public ArrayList<Sala> getSalas() {
         return this.salas;
-    }
-
-    public void addSala(Sala sala) {
-        salas.add(sala);
     }
 
     public Filme getFilme() {
@@ -125,21 +99,8 @@ public class Sessao {
     }
     @Override
     public String toString() {
-        return String.format("\n\nSessao {" +
-                "\n\nEstadoDaSessao = " + estadoDaSessao + " \n " +
-                "Horario = " + horario + " \n " +
-                this.ingresso.toString()+ " \n " +
-                this.filme.toString() +
-                ",\n\nSalas = " + salas +
-                "}\n\n");
-    }
-    public void mostrar(){
-        System.out.println(this.filme != null ? this.filme.toString() : ("Filme: N/I"));
-        System.out.println(this.horario != null ? ("Horario: " + this.horario) : ("Horario: N/I"));
-        System.out.println("Estado da Sessão: " + (this.estadoDaSessao ? ("Em andamento") : "Em breve") );
-        System.out.println("Salas: " + salas);
-
-
+        return String.format("\n\nSessao {" + "\n\nEstadoDaSessao = " + estadoDaSessao + " \n " + "Horario = " + horario + " \n " +
+                this.ingresso.toString()+ " \n " + this.filme.toString() + ",\n\nSalas = " + salas + "}\n\n");
     }
 
 }

@@ -35,39 +35,16 @@ public class Filme {
         }
     }
 
-    public EnumGeneroFilme getGenero() {
-        return this.genero;
-    }
     public void setGenero(EnumGeneroFilme genero) {
         this.genero = genero;
-    }
-
-
-    public ArrayList<Sessao> getSessoes() {
-        return sessoes;
-    }
-
-    public void setSessoes(ArrayList<Sessao> sessoes) {
-        this.sessoes = sessoes;
     }
 
     public void addSessoes(Sessao novaSessao) {
         sessoes.add(novaSessao);
     }
 
-    public void delSessoes(Sessao sessao){
-        for(Sessao s : sessoes){
-            if (s.equals(sessao)){
-                this.sessoes.remove(s);
-                s.getFilme().delSessoes(sessao);
-            }
-        }
-    }
-
     @Override
     public String toString() {
-        return String.format("\nFilme: " + this.titulo +
-                ",\nDuracao:  " + this.duracao +
-                ",\nGenero: " + this.genero );
+        return String.format("\nFilme: " + this.titulo + ",\nDuracao:  " + this.duracao + ",\nGenero: " + this.genero );
     }
 }

@@ -24,20 +24,8 @@ public class Ingresso {
         return this.categoria;
     }
 
-    public Sessao getSessao() {
-        return this.sessao;
-    }
-
-    public void delSessao() {
-        if (sessao != null)
-            this.sessao = null;
-    }
-
     @Override
     public String toString() {
-        return String.format( "%n\tIngresso {" +
-                "%n\t\tTipo = " + this.tipo +
-                ", %n\t\tCategoria = " + this.categoria +
-                " }");
+        return String.format( "%n\tIngresso {" + "%n\t\tTipo = " + this.tipo + ", %n\t\tCategoria = " + this.categoria + " }");
     }
 }

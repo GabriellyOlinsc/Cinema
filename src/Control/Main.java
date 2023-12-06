@@ -39,7 +39,6 @@ public class Main {
                     menuCliente();
                 }
                 opcao = input.nextInt();
-
                 System.out.println();
                 switch (opcao) {
                     case 0:
@@ -172,15 +171,14 @@ public class Main {
             if (!login.trim().equalsIgnoreCase("")) {
                 break;
             }
-
             System.out.println("Erro. Digite um valor para o nome.");
         }
     }
 
     public static void mensagemBoasVindas(){
-        System.out.println("\n+-------------------+-------------------+-------------------+");
+        System.out.println("\n+-------------------+-------------------+");
         System.out.println("\tSeja bem vindo(a) " + login.toUpperCase() + "!");
-        System.out.println("+-------------------+-------------------+-------------------+\n\n");
+        System.out.println("+-------------------+-------------------+\n\n");
     }
 
     private static void consultarSessao(ArrayList<Sessao> sessoes) {
@@ -451,7 +449,6 @@ public class Main {
                 }
             }
         }
-
         if (!existeFilme)
             throw new IllegalArgumentException("\nERRO. Os dados estao incorretos. Tente novamente.\n");
 

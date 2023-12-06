@@ -18,27 +18,14 @@ public class Sala {
         this.nAssentos = nAssentos;
     }
 
-    public String getTipoTela() {
-        return tipoTela;
-    }
-
-    public void setTipoTela(String tipoTela) {
-        this.tipoTela = tipoTela;
-    }
-
     public String getLocalizacao() {
         return localizacao;
     }
 
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
-    }
 
     @Override
     public String toString() {
-        return String.format("\n\tSala{" +
-                "\n\t\tNumero de Assentos = " + nAssentos +
-                ",\n\t\tTipoTela = ' " + tipoTela + " ' " +
+        return String.format("\n\tSala{" + "\n\t\tNumero de Assentos = " + nAssentos + ",\n\t\tTipoTela = ' " + tipoTela + " ' " +
                 ",\n\t\tLocalizacao = ' " + localizacao + " ' \n \t\t}");
     }
 }
