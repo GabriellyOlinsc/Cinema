@@ -66,10 +66,8 @@ public class Filme {
 
     @Override
     public String toString() {
-        return String.format("\n\tFilme {" +
-                "\n\t\tTitulo = " + this.titulo +
-                ",\n\t\tDuracao = " + this.duracao +
-                ",\n\t\tGenero = " + this.genero +
-                " }");
+        return String.format("\nFilme: " + this.titulo +
+                ",\nDuracao:  " + this.duracao +
+                ",\nGenero: " + this.genero );
     }
 }

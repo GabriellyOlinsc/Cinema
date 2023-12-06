@@ -133,4 +133,13 @@ public class Sessao {
                 ",\n\nSalas = " + salas +
                 "}\n\n");
     }
+    public void mostrar(){
+        System.out.println(this.filme != null ? this.filme.toString() : ("Filme: N/I"));
+        System.out.println(this.horario != null ? ("Horario: " + this.horario) : ("Horario: N/I"));
+        System.out.println("Estado da Sessão: " + (this.estadoDaSessao ? ("Em andamento") : "Em breve") );
+        System.out.println("Salas: " + salas);
+
+
+    }
+
 }

@@ -12,27 +12,26 @@ public class Main {
     private static String senha = "";
     public static void main(String[] args) {
 
-
-        Sessao.SessaoBuilder sessao = new Sessao.SessaoBuilder();
         Diretor diretor = new Diretor();
-        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(diretor.construirSessaoJoker(sessao), diretor.construirSessaoVingadores(sessao),
-                diretor.construirSessaoInterestelar(sessao)));
+        ArrayList<Sessao> sessoes = new ArrayList<>(List.of(
+                diretor.construirSessaoJoker(new Sessao.SessaoBuilder()),
+                diretor.construirSessaoVingadores(new Sessao.SessaoBuilder()),
+                diretor.construirSessaoInterestelar(new Sessao.SessaoBuilder()))
+        );
 
         int opcao;
         boolean continuar = true;
-        boolean continuarCargo = true;
-        boolean autenticado = false;
+        boolean continuarCargo;
         String opcao_Cargo = "";
 
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         System.out.println("SISTEMA DE GERENCIAMENTO CINEMATOGRAFICO");
         System.out.println("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
 
-
         while(continuar) {
             opcao_Cargo = login();
-
             mensagemBoasVindas();
+            continuarCargo = true;
             while (continuarCargo) {
                 if (opcao_Cargo.equals(FUNCIONARIO)) {
                     menuFuncionario();
@@ -43,6 +42,9 @@ public class Main {
 
                 System.out.println();
                 switch (opcao) {
+                    case 0:
+                        continuarCargo = false;
+                        break;
                     case 1:
                         consultarSessao(sessoes);
                         break;
@@ -93,16 +95,19 @@ public class Main {
                 }
                 input.nextLine();
             }
-            System.out.print("Tem certeza que deseja finalizar o programa? (Digite 1 para sim): ");
-            int opcaoFinal = input.nextInt();
-            if (opcaoFinal == 1) {
+            int opcaoFinal;
+            do {
+                System.out.print("-------------------------\n1 - Alterar Usuário\n2 - Sair do programa\n\nSelecione sua opção: ");
+                opcaoFinal= input.nextInt();
+            }while(opcaoFinal>2 || opcaoFinal<1);
+            if (opcaoFinal == 2) {
                 System.out.println("\nO programa ira encerrar. Agradecemos pelo contato!");
                 continuar = false;
-            }
+            }else
+                continuar = true;
             input.nextLine();
         }
     }
-
 
     // --------------------- MÉTODOS ESTÁTICOS --------------------- //
 
@@ -114,11 +119,11 @@ public class Main {
     }
 
     private static void menuFuncionario(){
-        System.out.print("1 - Visualizar as sessoes do dia\n2 - Venda de Ingressos\n3 - Adicionar Sessao\n4 - Remover Sessao\n5 - Sair do programa\n\nSelecione uma opcao: ");
+        System.out.print("1 - Visualizar as sessoes do dia\n2 - Venda de Ingressos\n3 - Adicionar Sessao\n4 - Remover Sessao\n5 - Logout\n\nSelecione uma opcao: ");
     }
 
     private static void menuCliente(){
-        System.out.print("1 - Visualizar as sessoes do dia\n2 - Comprar Ingresso\n3 - Sair do programa\n\nSelecione uma opcao: ");
+        System.out.print("1 - Visualizar as sessoes do dia\n2 - Comprar Ingresso\n3 - Logout\n\nSelecione uma opcao: ");
 
     }
 
@@ -177,6 +182,7 @@ public class Main {
         System.out.println("\tSeja bem vindo(a) " + login.toUpperCase() + "!");
         System.out.println("+-------------------+-------------------+-------------------+\n\n");
     }
+
     private static void consultarSessao(ArrayList<Sessao> sessoes) {
         for (Sessao s : sessoes) {
             if (s.getEstadoDaSessao()) {
@@ -259,7 +265,7 @@ public class Main {
             int opcaoTipoIngresso;
 
             do {
-                System.out.println("Escolha o tipo de ingresso: \n1 - Meio Ingresso \n2 - Ingresso Sorteio");
+                System.out.print("\n----------------\n1 - Meio Ingresso \n2 - Ingresso Sorteio\nEscolha o tipo de ingresso: ");
                 opcaoTipoIngresso = input.nextInt();
 
             } while (opcaoTipoIngresso < 1 || opcaoTipoIngresso > 2);
@@ -269,7 +275,7 @@ public class Main {
             int opcaoCategoriaIngresso;
 
             do {
-                System.out.println("Escolha a categoria de ingresso:\n1 - Ingresso Físico\n2 - Ingresso Online");
+                System.out.println("\n----------------\n1 - Ingresso Físico\n2 - Ingresso Online\nEscolha a categoria de ingresso:");
                 opcaoCategoriaIngresso = input.nextInt();
 
             } while (opcaoCategoriaIngresso < 1 || opcaoCategoriaIngresso > 2);
@@ -454,6 +460,5 @@ public class Main {
         else
             throw new IllegalArgumentException("\nERRO. A sessao nao foi removida com sucesso. Verifique se os dados informados estao corretos e tente novamente.\n");
     }
-
 
 }
